@@ -1,0 +1,82 @@
+function validInput() {
+    var userNum = prompt("Enter an integer between 1 and 100");
+    var val = Number(userNum);
+    while ((val < 1) || (val > 100) || isNaN(val) || (val != Math.floor(val))) {
+        num = prompt("Invalid input - Enter an integer between 1 and 100");
+        var val = Number(num);
+    }
+    return val;
+}
+
+function playGame() {
+    var loopCounter, userNum, specialNum;
+    specialNum = 1 + Math.floor(Math.random() * 100);
+    console.log(specialNum);
+    document.write('<h4> I am thinking of a number between 1 and 100. Can you guess my number in 8 guesses or less? <h4>');
+    // When the function is used in a variable, it uses the return value which in this case is 'val'
+    for (loopCounter = 1; loopCounter < 9; loopCounter++) {
+        userNum = validInput();
+        if (userNum < specialNum) {
+            document.write(loopCounter + ') Sorry! Your guess of ' + userNum + ' is too low! Try again!' + '<br>');
+        } else if (userNum > specialNum) {
+            document.write(loopCounter + ') Sorry! Your guess of ' + userNum + ' is too high! Try again!' + '<br>')
+        } else if (userNum === specialNum) {
+            document.write(loopCounter + ') Outstanding. Your guess of ' + userNum + ' is correct.' + '<br>');
+            break;
+        }
+    }
+
+    if (loopCounter < 9) {
+        document.write('<br>CONGRATULATIONS!! <br> You guessed my number!' + '<br>')
+        document.write('My number was ' + specialNum + '<br>');
+        return true;
+    } else if (loopCounter >= 9) {
+        document.write('<br>Sorry! <br>You lost the game.<br>');
+        document.write('You used all 8 guesses and didn\'t guess my number.<br>');
+        document.write('My number was ' + specialNum + '<br>');
+        return false;
+
+    }
+
+}
+
+function playTournament() {
+    var numWins, gameCount, gamebooleanResult;
+    numWins = 0;
+    gameCount = 0;
+
+    for (gameCount = 1; gameCount < 3; gameCount++) {
+        document.write('Game Number ' + gameCount);
+        gamebooleanResult = playGame();
+        if (gamebooleanResult === false) {
+            numWins += 0;
+            console.log(numWins + 'Test1')
+        } else {
+            numWins += 1;
+            console.log(numWins + 'Test2')
+        }
+    }
+
+    if (numWins >= 2) {
+        showWin(numWins)
+        console.log('TEST1');
+    } else {
+        showLose(numWins)
+        console.log('TEST2');
+    }
+
+}
+
+function showLose(numWins) {
+    document.write('You won ' + numWins + 'games<br><br>');
+    document.write('Sorry! <br>You lost the tournament.<br><br>');
+    document.write('Please refresh the page to play again');
+}
+
+function showWin(numWins) {
+    document.write('You won ' + numWins + 'games<br><br>');
+    document.write('CONGRATULATIONS!! <br> You WON the tournament!!<br><br>');
+    document.write('Please refresh the page to try again.')
+}
+
+playTournament();
